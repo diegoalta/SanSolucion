@@ -1,0 +1,219 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl() ."/js/modulos/administracion/asistentes/asistentes.js"?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl() ."/js/modulos/administracion/asistentes/gridAsistentes.js"?>"></script>
+<div>
+<div class="panel-default "  align=center>
+            <div class="row well">
+                <h1>ASISTENTE DE SERVICIOS</h1> 
+            </div>
+    <!-- <div class="panel-body "> -->
+         <div class="row "> <!-- seteamos los filtros -->
+            <div class="col-lg-11 col-lg-offset-1">
+            
+                <div class="form-group col-lg-3" >
+                    <div class=" input-group">
+                        Nombre
+                        <input id="descripcionpersona-filtro" type="text" name="selectInput" class="form-control input-sm" placeholder=" Nombre del cliente" >
+                    </div>
+                </div>
+                <!-- Tipo de Solicitud, busqueda remota -->
+                <div class="form-group col-lg-2">
+                    <div class="input-group">
+                        Estado
+                        <select id="estadoasistente-filtro" class="input-sm form-control">
+                            <option value="-1">Seleccionar</option>
+                            <option value="A">Activo</option>
+                            <option value="I">Inactivo</option>
+                        </select>
+                    </div>
+                
+                </div>
+                <!-- Nro Linea - Carga el usuario -->
+                <div class="form-group col-lg-3">
+                    <div class=" input-group">
+                       Número de teléfono
+                        <input id="telefonopersona-filtro" type="text" name="selectInput" class="form-control input-sm" placeholder=" Número de teléfono"
+                               
+                               >
+                    </div>
+                </div> 
+                <!-- Nro Linea - Carga el usuario -->
+                <div class="form-group col-lg-3">
+                    <div class=" input-group">
+                       Documento identidad
+                        <input id="numerodocumentopersona-filtro" type="text" name="selectInput" class="form-control input-sm" placeholder=" Número de teléfono"
+                               
+                               >
+                    </div>
+                </div>
+
+             </div>
+        </div> <!-- row de filtros end -->
+        <br>
+        <div class="row "> <!-- row de botones buscar, nuevo -->
+            <div class="col-lg-12">
+                <button type="button" class="btn btn-primary btn-sm" onclick="buscar()">
+                    <i class="icon icon-search"></i> Buscar
+                </button>
+                <button type="button" class="btn btn-warning btn-sm " id="muestramodal"> <i
+                    class="icon icon-eraser"></i> Nuevo
+                </button>
+                <!-- <button type="button" class="btn btn-info btn-sm " id="reporte"> <i
+                    class="icon icon-eraser"></i> Reporte
+                </button> -->
+            </div>
+        </div>
+        <br>
+    
+        <div class="row "> <!-- row para la tabla --> 
+            <div class="col-lg-12" id="contenedorGrilla">
+                <div class="table-responsive" >
+                <table id="grillaAsistente"></table>
+                <div id="paginadorAsistente"></div>
+             </div>
+
+            </div>
+            
+        </div>  <!-- end row tabla -->
+
+
+
+    <!-- </div>    end   panel body -->
+</div> <!-- end panel default -->
+               
+</div>
+
+<div class="modal well" id="modalNuevo">   
+    <div class="modal-content">
+        <div class="modal-header">   
+            <a class="close" id="close-modal">×</a>      
+            <h1>ASISTENTE DE SERVICIOS</h1>
+        </div>               
+        <div class="alert alert-danger" id="warning-modal" style="display: none;">
+                <div id="warning-message-modal"></div>
+        </div>
+        <div class="alert alert-success"  id="success-modal" style="display: none;">
+                <div id="success-message-modal"></div>
+        </div> 
+        <div class="modal-body">
+            <div class="container"  >
+                <div class=" col-lg-6">  
+                    <div class="form-group " >
+                        <div class=" input-group">
+                            Código Asistente
+                            <input id="codigoasistente-modal" type="text" name="selectInput" class="form-control input-sm " placeholder=" " disabled="disabled" required>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <div class=" input-group">
+                            Código persona
+                            <input id="codigopersona-modal" type="text" name="selectInput" class="form-control input-sm" placeholder=" " disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <div class=" input-group">
+                            Nombre
+                            <input id="descripcionpersona-modal" type="text" name="selectInput" class="form-control input-sm" placeholder=" Nombre del cliente" >
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <div class=" input-group">
+                            Documento
+                            <input id="numerodocumentopersona-modal" type="text" name="selectInput" class="form-control input-sm" placeholder="Documento" >
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <div class=" input-group">
+                            RUC
+                            <input id="rucpersona-modal" type="text" name="selectInput" class="form-control input-sm" placeholder=" RUC" >
+                        </div>
+                    </div>
+                   
+               </div>
+                <div class=" col-lg-6">
+                     <div class="form-group" >
+                        <div class=" input-group">
+                            Dirección
+                            <input id="direccionpersona-modal" type="text" name="selectInput" class="form-control input-sm" placeholder=" Dirección" >
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <div class=" input-group">
+                            Teléfono
+                            <input id="telefonopersona-modal" type="text" name="selectInput" class="form-control input-sm" placeholder=" teléfono" >
+                        </div>
+                    </div>  
+                    <div class="form-group" >
+                        <div class=" input-group">
+                            Email
+                            <input id="emailpersona-modal" type="email" name="selectInput" class="form-control input-sm" placeholder=" Email" >
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <div class=" input-group">
+                            Ciudad
+                            <input id="ciudadpersona-modal" type="text" name="selectInput" class="form-control input-sm"  >
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <div class=" input-group">
+                            Barrio
+                            <input id="barriopersona-modal" type="text" name="selectInput" class="form-control input-sm"  >
+                        </div>
+                    </div>
+                     <div class="form-group" >
+                        <div class=" input-group">
+                            Estado
+                            <select id="estadoasistente-modal" class="input-sm form-control">
+                            <option value="A">Activo</option>
+                            <option value="I">Inactivo</option>
+                        </select>
+                        </div>
+                    </div>
+
+               </div>
+           </div>
+        </div>
+
+        <div class="modal-footer">
+            <a  id="cancelar-modal"class="btn btn-danger">Cancelar</a>
+            <a id="guardar-modal" class="btn btn-success">Guardar</a>
+        </div>
+    </div>
+</div>
+<div class="modal well" id="modalReportes">   
+    <div class="modal-content">
+        <div class="modal-header">   
+            <a class="close" id="close-reporte">×</a>      
+            <h1>Reportes</h1>
+        </div>               
+        <div class="modal-body">
+            <div class="row"  >
+                <!-- <div class=" col-lg-12">   -->
+                    <div class="form-group col-lg-4" >
+                        <div class=" input-group">
+                            <label>Asistente</label> 
+                            <input id="asistente-reporte" type="text" name="selectInput" class="form-control input-sm " placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4" >
+                        <div class=" input-group">
+                            <label>Fecha desde</label>
+                            <input id="fechadesde-reporte" type="text" name="selectInput" class="form-control input-sm" placeholder="" >
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4" >
+                        <div class=" input-group">
+                            <label>Fecha hasta</label>
+                            <input id="fechahasta-reporte" type="text" name="selectInput" class="form-control input-sm" placeholder="" >
+                        </div>
+                    </div>                   
+               <!-- </div> -->
+           </div>
+        </div>
+
+        <div class="modal-footer">
+            <a  id="cancelar-reporte"class="btn btn-danger">Cancelar</a>
+            <a id="imprimir-reporte" class="btn btn-success">Imprimir</a>
+        </div>
+    </div>
+</div>
